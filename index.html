@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xml:lang="en">
+<head>
+  <title>Calculator for working out batteries for mobile renewable sound system: 12 volt, 24 volt, etc.</title>
+<script type="application/x-javascript">
+
+function calculate(sFormula) {
+
+ var voltage = document.getElementById(sFormula + '_voltage').value;
+ var max_discharge = document.getElementById(sFormula + '_discharge').value;
+ var power = document.getElementById(sFormula + '_power').value;
+ var capacity = document.getElementById(sFormula + '_capacity').value;
+ var time = document.getElementById(sFormula + '_time').value;
+
+ switch(sFormula) {
+ case 'formula_a':
+   var time = ( (capacity * voltage) * (max_discharge / 100) ) / power;
+   document.getElementById(sFormula + '_time').innerHTML = time + ' hours';
+   break;
+ case 'formula_b':
+   var capacity = (100 * time * power) / (voltage * max_discharge);
+   document.getElementById(sFormula + '_capacity').innerHTML = capacity + ' Ampere-hours (Ah)';
+   break;
+ }
+
+}
+
+function calculate_rms() {
+  var power = document.getElementById('power').value;
+
+  document.getElementById('rms').innerHTML = Math.round((power / Math.sqrt(2))) + ' Watts (W)';
+}
+
+  </script>
+<style type="text/css">
+
+h1 {
+font-size:1.4em;
+}
+
+h2 {
+font-size:1.2em;
+}
+
+h3 {
+font-size:1.0em;
+}
+
+p {
+font-size:0.9em;
+}
+
+address {
+font-size:0.8em;
+}
+
+div#content {
+  margin-right: 540px;
+}
+
+p#graph img {
+  width: 500px;
+  float: right;
+  vertical-align:top;
+}
+
+span.answer {
+  font-size:1.4em;
+  font-weight:bold;
+  background: lightgreen;
+  padding: 6px 6px 3px;
+}
+
+button {
+  background: green;
+  color: white;
+  font-size: 0.8em;
+}
+
+</style>
+
+</head>
+<body>
+  <h1>Renewable mobile sound system battery requirements calculator</h1>
+  <p><em>Latest version of this page available at <a href="http://mbharris.co.uk/12-volt-sound-system-battery-calculator/">http://mbharris.co.uk/12-volt-sound-system-battery-calculator/</a></em></p>
+  <p>To power your portable sound system, you'll need to get yourself a set of <a href="http://en.wikipedia.org/wiki/Deep_cycle_battery">deep-cycle batteries</a>.  Normal leisure/caravanning batteries should do the job, but <strong>car/starter batteries will not</strong>.   Deep cycle batteries are designed to be discharged and charged a lot over a period of time, whereas starter batteries are designed to put out a large amount of charge over a short space of time to start a motor.  You'll <em>fuck</em> you're starter battery if you use it for this application.  You can buy deep cycle batteries online, <a href="http://shop.ebay.com/i.html?_nkw=12+volt+deep+cycle+battery&amp;_frs=1&amp;_trksid=p3286.c0.m359">at eBay for example</a>.</p>
+
+  <h2>6 volt, 12 volt or 24 volt?</h2>
+
+  <p>Does it really matter?  Well the short answer is that if you're using a 12 volt sound system, which is the common voltage for systems designed to be installed in cars, then you'll need 12 volt; 24 volt just won't be any good for your application.  As you can chain two 6 volt batteries together <strong>in series</strong> to make a 12 volt array, the 6 volt cells are an option for you.</p>
+
+  <p>It's a question of price and quality of battery really.  If you get two higher capacity (in ampere hours (Ah)) and better quality 6 volt batteries for a decent price, then these may be better than a single 12 volt one.  You need to chain the two 6 volt ones together using some connector leads.</p>
+
+  <p>You can also connect 12 volt batteries together <strong>in parallel</strong> to make a greater capacity, such as chaining two 110Ah leisure batteries together to make a single 220Ah array of batteries.</p>
+
+  <h2></h2>
+
+  <h2>Calculating what you need</h2>
+  
+  <p id="graph"><a href="http://en.wikipedia.org/wiki/File:Lead-acid_voltage_vs_SOC.PNG"><img src="v-vs-soc.png" alt="Lead Acid battery - volts vs State of Charge (SOC), courtesy of Wikipedia" /></a></p>
+
+  <p>To calculate what you need, you can use the various <a href="#calculators">JavaScript calculators below</a>.  If you prefer to know the maths, the read on.</p>
+  <p>Firstly you need to work out what you want to know.  This might be how many hours can I run my xxx watt power amp on a battery that's yyy Ah?  Or it could be, what battery do I need to run my xxx watt power amp for zzz hours?  You can calculate various bits and bobs below:</p>
+
+  <h3>Working out how much really is the power output of your power amp</h3>
+
+  <p>A friend, Dave, wrote in about this article to add that there's a big difference between what your system peaks at (often in large letters on the boxes of car amps as MAX POWER!) and the <acronym title="Root Mean Square">RMS</acronym> running power of the system - the continuous power your amplifier can deliver without extending out of their safe operating area and generally overheating / exploding.  To calculate the RMS running power check out <a href="http://en.wikipedia.org/wiki/Root_mean_square">this page at Wikipedia</a>.  For example, for a sign-wave output it will be the peak power divided by the squareroot of two:</p>
+  <p><img class="tex" alt="\frac{a}{\sqrt{2}}" src="http://upload.wikimedia.org/math/6/7/8/678536c878deea7ce30ad951de4e31b1.png" /></p>
+
+  <p>Which for a 300 watt peak power amplifier would be:</p>
+  <pre>
+    300 / sqrt(2) = 300 / 1.4142 = 212 watts.
+  </pre>
+ 
+  <P>And another thing that is slightly off topic of batteries but is <strong>so</strong> crucial to 12V power amplifiers is that one place you can <em>massively</em> improve the running time of your rig is the efficiency of your drivers / speakers, this is often an overlooked factor, but it wouldn't be unusual to get <strong>eight</strong> times the running length with efficient drivers over inefficient ones at the same volume... more on this hopefully at a later date.  Thanks Dave.</p>
+  
+  <h3>Calculating how many amps your power amp will use</h3>
+
+  <p>If you know that your power amp peaks at 240 watts and that's what you'll be running it at - full tilt for that full-on rave up - then you simply need to work out the amps that that will use.  Harking back to those school days, you might remember that power = voltage x current (P = IV)? and that therefore current (Amps) = power (W) / voltage (V) (I = P/V).  So for a 240 watt power amp running at 12 volts we have:</p>
+  <pre>
+    240 (watts) / 12 (volts) = 20 amps
+  </pre>
+  
+    <p>If you run your 240 watt 12 volt power amplifier for one hour, then you will use 20 ampere hours.</p>
+    
+    <h3>Calculating the useful capacity of the battery</h3>
+    
+  <p>Your battery will have a manufacturer's recommended maximum discharge amount.  This is by how much you can discharge the battery and then recharge it again and it be perfectly alright.  Over the recommended discharge amount you might find that your battery won't <em>come back up again</em> to it's former fully charged glory.  As the battery discharges, then so the amount of voltage it is able to put out decreases.  Looking at the graph on the right, you'll see that a fully charge 12 volt battery actually starts at around 12.7 volts, but at 50% discharge, it is only providing 12.1 volts, and at 40% just 11.8 volts.  A deep-cycle battery is designed to discharge between 50% and 80% depending on the manufacturer and construction of the battery. Although these batteries can be cycled down to 20% charge, the best lifespan vs cost method is to keep the average cycle at about 50% discharge, and therefore 50% is what I've used in these calculations.</p>
+
+  <hr/>
+  
+  <h2 id="calculators">JavaScript calculators</h2>
+
+  <h3>Max Power -&gt; RMS power</h3>
+
+  <p>
+    Max power: <input type="text" value="" name="power" id="power" /> Peak watts (W)<br/><br/>
+    <button type="button" onclick="calculate_rms()">Calculate RMS power &gt;&gt;</button>&nbsp;<span id="rms" class="answer"></span>
+  </p>
+    
+  <hr/>
+
+  <h3>Working out how long you can run when you know the power and the capacity</h3>
+  <p>Use this form to calculate how many hours you could run for given the power you require and the batteries you have.  To do this you need to know the voltage of your system (defaults to 12v), the power requirements of your system, and the charge capacity (in ampere hours) and manufacturer's recommended maximum discharge amount (defaults to a conservative 50%) of your battery array.</p>
+  
+  <p>
+    System power: <input type="text" value="" name="power" id="formula_a_power" /> Watts (W)<br/>
+    Battery capacity: <input type="text" value="" name="capacity" id="formula_a_capacity" /> Ampere-hours (Ah)<br/>
+    System voltage: <select name="voltage" id="formula_a_voltage"><option value="6">6 volts</option><option value="12" selected="selected">12 volts</option><option value="24">24 volts</option></select><br/>
+    Recommended max discharge: <select name="discharge" id="formula_a_discharge"><option value="40">40%</option><option value="50" selected="selected">50%</option><option value="60">60%</option><option value="70">70%</option><option value="80">80%</option></select><br/><br/>
+    <button type="button" onclick="calculate('formula_a')">Calculate time &gt;&gt;</button>&nbsp;<span id="formula_a_time" class="answer"></span>
+</p>
+
+  <h3>Working out how what battery capacity you need to run yer amp for so many hours</h3>
+  <p>Use this form to calculate what battery capacity (in Ampere-hours, Ah) you'll need to run your power amp for a certain number of hours.  To do this you need to know the voltage of your system (defaults to 12v), the power requirements of your system, and how long you'll want to run for.  The calculator defaults to a manufacturer's recommended maximum discharge amount (defaults to a conservative 50%) of your battery array.</p>
+  
+  <p>
+    System power: <input type="text" value="" name="power" id="formula_b_power" /> Watts (W)<br/>
+    How long's yer rave: <input type="text" value="" name="time" id="formula_b_time" /> hours (h)<br/>
+    System voltage: <select name="voltage" id="formula_b_voltage"><option value="6">6 volts</option><option value="12" selected="selected">12 volts</option><option value="24">24 volts</option></select><br/>
+    Recommended max discharge: <select name="discharge" id="formula_b_discharge"><option value="40">40%</option><option value="50" selected="selected">50%</option><option value="60">60%</option><option value="70">70%</option><option value="80">80%</option></select><br/><br/>
+    <button type="button" onclick="calculate('formula_b')">Calculate capacity &gt;&gt;</button>&nbsp;<span id="formula_b_capacity" class="answer"></span>
+</p>
+<hr/>
+<address>(c) 2011 <a href="http://mbharris.co.uk">Mike Harris</a>.  Free software released under <a href="http://www.gnu.org/licenses/gpl.html">GNU Public Licence 3.0</a>.  Feel free to view the source, download, hack and improve this code; but remember to share it with the world.</address>
+  <p>
+    <a href="http://validator.w3.org/check?uri=http://mbharris.co.uk/12-volt-sound-system-battery-calculator/" title="This document is compliant!!"><img
+        src="http://www.w3.org/Icons/valid-xhtml11"
+        alt="Valid XHTML 1.1" height="31" width="88" /></a>
+  </p>
+  
+ </body>
+</html>
